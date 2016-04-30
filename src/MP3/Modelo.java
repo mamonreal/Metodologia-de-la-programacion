@@ -190,22 +190,28 @@ public class Modelo extends Observable{
                 if ((direction == 38)&&(e.getKeyCode() != 40)) {
                     direction = e.getKeyCode();
                     change = false;
+                    System.out.println(e.getKeyCode());
                 }                        
                 if ((direction == 40)&&(e.getKeyCode() != 38)) {
                         direction = e.getKeyCode();
                         change = false;
+                        System.out.println(e.getKeyCode());
                 }
                 if ((direction == 37)&&(e.getKeyCode() != 39)) {
                     direction = e.getKeyCode();
                     change = false;
+                    System.out.println(e.getKeyCode());
                 }
                 if ((direction == 39)&&(e.getKeyCode() != 37)) {
                         direction = e.getKeyCode();
                         change = false;
+                        System.out.println(e.getKeyCode());
                 }
             }
-            if (e.getKeyCode() == 32)
+            if (e.getKeyCode() == 32) {
                 pause = !pause;
+                System.out.println(e.getKeyCode());
+            }
             //Si se le da al espacio el juego se para, pero no se vuelve a poner en marcha, hay que buscar solucion
             /*
             if (e.getKeyCode() == 32)
