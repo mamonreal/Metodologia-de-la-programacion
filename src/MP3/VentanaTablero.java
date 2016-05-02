@@ -43,7 +43,7 @@ public class VentanaTablero extends javax.swing.JFrame implements Observer{
         );
         pnlTableroLayout.setVerticalGroup(
             pnlTableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 282, Short.MAX_VALUE)
+            .addGap(0, 200, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -59,8 +59,8 @@ public class VentanaTablero extends javax.swing.JFrame implements Observer{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlTablero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(pnlTablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         pack();
@@ -84,18 +84,10 @@ public class VentanaTablero extends javax.swing.JFrame implements Observer{
         this.colorBackground = Color.white;
         matriz = new JPanel[ROWS][COLUMNS];
         pnlTablero = new JPanel();
-        pnlTablero.setLayout(new GridLayout(ROWS, COLUMNS));
-            for (int i = 0; i < ROWS; i++) {
-                for (int j = 0; j < COLUMNS; j++){
-                    JPanel p = new JPanel();
-                    p.setName(j + ", " + i);
-                    p.setBackground(colorBackground);
-                    matriz[i][j] = p;
-                    pnlTablero.add(p);
-                }
-            }
+        rellenarTablero(pnlTablero, matriz, ROWS, COLUMNS, colorBackground);
         Punto head = modelo.getHead();
         matriz[head.getY()][head.getX()].setBackground(colorSnake);
+        setFocusable(true);
         pnlTablero.setVisible(true);
     }
     
@@ -117,4 +109,17 @@ public class VentanaTablero extends javax.swing.JFrame implements Observer{
         }
     }
     
+    public static void rellenarTablero(JPanel tablero, JPanel[][] matriz, int ROWS, int COLUMNS, Color colorBackground) {
+        GridLayout gridLayout = new GridLayout(ROWS, COLUMNS);
+        tablero = new JPanel();
+        tablero.setLayout(gridLayout);
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++){
+                JPanel p = new JPanel();
+                p.setBackground(colorBackground);
+                matriz[i][j] = p;
+                tablero.add(p);
+            }
+        }
+    }
 }

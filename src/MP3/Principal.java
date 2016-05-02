@@ -16,5 +16,6 @@ public class Principal {
      // Registro de oyentes
         modelo.addObserver(panelMarcador);
         modelo.addObserver(ventanaTablero);
+        modelo.start();
     }
 }

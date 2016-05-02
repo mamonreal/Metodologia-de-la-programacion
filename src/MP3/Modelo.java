@@ -28,6 +28,7 @@ public class Modelo extends Observable{
     //Puntos conseguidos
     private int points;
     ActualizaPosicion actualizaPosicion = new ActualizaPosicion();
+    MyKeyListener myKeyListener = new MyKeyListener();
     
     public Modelo() {
         ROWS = 40;
@@ -45,8 +46,7 @@ public class Modelo extends Observable{
         snake = new Snake(head);
         board[head.getY()][head.getX()].setBackground(Color.red);
         Food();
-        addKeyListener(actualizaPosicion);
-        actualizaPosicion.start();
+        addKeyListener(myKeyListener);
     }
 
     //GETTERS & SETTERS
@@ -144,48 +144,20 @@ public class Modelo extends Observable{
         this.notifyObservers(msg);
     }
     
-    class ActualizaPosicion extends Thread implements KeyListener{
+    //Iniciar Thread
+    public void start() {
+        actualizaPosicion.start();
+        System.out.println("Se ha iniciado Thread");
+    }
+    
+    class ActualizaPosicion extends Thread{
         private int vel = 10;
         private int direction = 39;
         private boolean change = true;
         private boolean fin = true;
         private boolean pause = true;
         
-        @Override
-        public void run() {
-            while(fin) {
-                if(! pause) {
-                    try {
-                    Thread.sleep(vel*7);
-                    }
-                    catch (InterruptedException ex) {
-                    System.err.println("Error en ActualizaTablero"); 
-                    }
-                    move(direction);
-                    change = true;
-                }
-            }
-        }
-        
-        public void move(int d) {
-            switch(d) {
-                case 39:
-                    moveRight();
-                    break;
-                case 37:
-                    moveLeft();
-                    break;
-                case 38:
-                    moveUp();
-                    break;
-                case 40:
-                    moveDown();
-                    break;
-            }
-        }
-
-        @Override
-        public void keyTyped(KeyEvent e) {
+        public void setDireccion(KeyEvent e) {
             if ((e.getKeyCode() < 41) && (e.getKeyCode() > 36) && change) {
                 if ((direction == 38)&&(e.getKeyCode() != 40)) {
                     direction = e.getKeyCode();
@@ -222,15 +194,59 @@ public class Modelo extends Observable{
                 masLento();
                     */
         }
+        
+        @Override
+        public void run() {
+            while(fin) {
+                if(! pause) {
+                    try {
+                    Thread.sleep(vel*7);
+                    }
+                    catch (InterruptedException ex) {
+                    System.err.println("Error en ActualizaTablero"); 
+                    }
+                    move(direction);
+                    change = true;
+                }
+                System.out.println("Velocidas" + vel);
+                System.out.println("Direccion" + direction);
+            }
+        }
+        
+        public void move(int d) {
+            switch(d) {
+                case 39:
+                    moveRight();
+                    break;
+                case 37:
+                    moveLeft();
+                    break;
+                case 38:
+                    moveUp();
+                    break;
+                case 40:
+                    moveDown();
+                    break;
+            }
+        }
+    }
+    
+    class MyKeyListener implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        actualizaPosicion.setDireccion(e);
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+        
     }
 }
